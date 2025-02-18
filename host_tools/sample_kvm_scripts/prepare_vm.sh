@@ -1,9 +1,9 @@
 #
 #  Copyright (c) 2023  NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 #
-AMD_SEV_DIR=/shared/AMDSEV/snp-release-2023-07-19
+AMD_SEV_DIR=/shared/AMDSEV/snp-release-2024-11-19
 VDD_IMAGE=/shared/nvtrust/host_tools/sample_kvm_scripts/images/ubuntu22.04.qcow2
-ISO=/shared/nvtrust/host_tools/sample_kvm_scripts/isos/ubuntu-22.04.2-live-server-amd64.iso
+ISO=/shared/nvtrust/host_tools/sample_kvm_scripts/isos/ubuntu-22.04.5-live-server-amd64.iso
 FWDPORT=9899
 
 $AMD_SEV_DIR/usr/local/bin/qemu-system-x86_64 \
