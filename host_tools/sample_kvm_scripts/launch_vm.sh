@@ -7,7 +7,7 @@ VDD_IMAGE=/mnt/data/vm_disks/ubuntu22.04-cc.qcow2
 
 #Hardware Settings
 NVIDIA_GPU=45:00.0
-MEM=32 #in GBs
+MEM=64 #in GBs
 FWDPORT=9899
 
 doecho=false
@@ -41,7 +41,7 @@ $AMD_SEV_DIR/usr/local/bin/qemu-system-x86_64 \
 ${USE_HCC:+ -machine confidential-guest-support=snp,vmport=off} \
 ${USE_HCC:+ -object sev-snp-guest,id=snp,cbitpos=51,reduced-phys-bits=1} \
 -enable-kvm -nographic -no-reboot \
--cpu EPYC-v4 -machine q35 -smp 8 -m ${MEM}G \
+-cpu EPYC-v4 -machine q35 -smp 32 -m ${MEM}G \
 -bios $AMD_SEV_DIR/usr/local/share/qemu/OVMF.fd \
 -drive file=$VDD_IMAGE,if=none,id=disk0,format=qcow2 \
 -device virtio-scsi-pci,id=scsi0,disable-legacy=on,iommu_platform=true \
@@ -50,4 +50,6 @@ ${USE_HCC:+ -object sev-snp-guest,id=snp,cbitpos=51,reduced-phys-bits=1} \
 -netdev user,id=vmnic,hostfwd=tcp::$FWDPORT-:22,hostfwd=tcp::8080-:8080 \
 -device pcie-root-port,id=pci.1,bus=pcie.0 \
 -device vfio-pci,host=$NVIDIA_GPU,bus=pci.1 \
+-object memory-backend-file,id=mem,size=${MEM}G,mem-path=/dev/hugepages,share=on \
+-numa node,memdev=mem \
 -fw_cfg name=opt/ovmf/X-PciMmio64Mb,string=262144
