@@ -40,7 +40,7 @@ $AMD_SEV_DIR/usr/local/bin/qemu-system-x86_64 \
 ${USE_HCC:+ -machine confidential-guest-support=snp,vmport=off} \
 ${USE_HCC:+ -object sev-snp-guest,id=snp,cbitpos=51,reduced-phys-bits=1} \
 -enable-kvm -nographic -no-reboot \
--cpu EPYC-v4 -machine q35 -smp 32 -m ${MEM}G \
+-cpu EPYC-v4 -machine q35 -smp 32,maxcpus=32 -m ${MEM}G,slots=2,maxmem=128G \
 -bios $AMD_SEV_DIR/usr/local/share/qemu/OVMF.fd \
 -drive file=$VDD_IMAGE,if=none,id=disk0,format=qcow2 \
 -device virtio-scsi-pci,id=scsi0,disable-legacy=on,iommu_platform=true \
